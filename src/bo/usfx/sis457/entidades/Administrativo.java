@@ -62,7 +62,7 @@ public class Administrativo extends Persona {
                 + ", CarnetIdentidad=" + this.CarnetIdentidad 
                 + ", Nombre=" + this.Nombre 
                 + ", FechaNacimiento=" + Utilitarios.getFechaCalendario(this.FechaNacimiento)
-                + ", Cargo=" + Cargo + ", LugarTabejo=" + LugarTabejo + '}';
+                + ", Cargo=" + Cargo + ", LugarTabejo=" + LugarTabejo +  ", FechaIngreso=" + FechaIngreso'}';
     }
     
 }                           

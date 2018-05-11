@@ -49,6 +49,8 @@ public class POOHerenciaEjemplo {
         System.out.println("| 1) Gestión de Personas                           |");
         System.out.println("| 2) Gestión de Profesores                         |");
         System.out.println("| 3) Gestión de Alumnos                            |");
+        System.out.println("| 4) Gestión de Administrativos                    |");
+        
         System.out.println("| 0) Salir                                         |");
         System.out.println("+==================================================+");
         System.out.print("Qué desea realizar? ");
@@ -64,6 +66,9 @@ public class POOHerenciaEjemplo {
             case "3":
                 menuAlumnos();
                 break;
+            case "4":
+                menuAdministrativos();
+                break;    
             default:
                 System.out.println("Salió del Programa");
         }        
@@ -182,6 +187,53 @@ public class POOHerenciaEjemplo {
                 menuPrincipal();
         }
     }
+    
+    
+     public static void menuAdministrativos() {
+        // Declaracion de las variables
+        Scanner entradaTeclado;
+        String opcion;
+
+        limpiarConsola();
+        System.out.println("+==================================================+");
+        System.out.println("| Gestión de Administrativos                             |");
+        System.out.println("+==================================================+");
+        System.out.println("| 1) Listar Administrativos                               |");
+        System.out.println("| 2) Añadir Administrativos                                |");
+        System.out.println("| 3) Modificar Administrativo                             |");
+        System.out.println("| 4) Borrar Administrativo                               |");
+        System.out.println("| 0) Volver al Menú Principal                      |");
+        System.out.println("+==================================================+");
+        System.out.print("Qué desea realizar? ");
+        entradaTeclado = new Scanner(System.in);
+        opcion = entradaTeclado.next();
+        switch (opcion) {
+            case "1":
+                listarAdministrativos();
+                volverMenu();
+                menuAdministrativos();
+                break;
+            case "2":
+                anadirAdministrativos();
+                volverMenu();
+                menuAdministrativos();
+                break;
+            case "3":
+                modificarAdministrativos();
+                volverMenu();
+                menuAlumnos();
+                break;
+            case "4":
+                borrarAdministrativos();
+                volverMenu();
+                menuAdministrativos();
+                break;
+            default:
+                menuPrincipal();
+        }
+    }
+    
+    
     
     public static void volverMenu() {
         String opcion;
@@ -435,6 +487,114 @@ public class POOHerenciaEjemplo {
                 System.out.println("Registro de Alumno borrado!");
             } else {
                 System.out.println("El Registro de Alumno no existe!");
+            }
+        } catch(Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    
+    public static void listarAdministrativos() {
+        limpiarConsola();
+        System.out.println("+==================================================+");
+        System.out.println("| Listado de Administrativos                              |");
+        System.out.println("+==================================================+");
+        int i = 0;
+        for (Persona Administrativo: personas) {
+            if (Administrativo instanceof Administrativo) {
+                i++;
+                System.out.println(i + ": " + Administrativo);
+            }
+        }
+        if (i == 0) {
+            System.out.println("No existen registros");
+        }
+    }
+    
+    public static void anadirAdministrativos() {
+        String carnetIdentidad;
+        String nombre;
+        String fechaNacimiento;
+        String carnetUniversitario;
+        int semestre;
+        BufferedReader entradaTeclado = new BufferedReader(new InputStreamReader(System.in));
+        
+        limpiarConsola();
+        try {
+            System.out.println("+==================================================+");
+            System.out.println("| Añadir Administrativo                                  |");
+            System.out.println("+==================================================+");
+            System.out.print("Introduzca el Carnet de Identidad: ");
+            carnetIdentidad = entradaTeclado.readLine();
+            System.out.print("Introduzca el Nombre: ");
+            nombre = entradaTeclado.readLine();
+            System.out.print("Introduzca la Fecha de Nacimiento (ejemplo: 1980-01-01): ");
+            fechaNacimiento = entradaTeclado.readLine();
+            System.out.print("Introduzca el CU: ");
+            carnetUniversitario = entradaTeclado.readLine();
+            System.out.print("Introduzca el Semestre: ");
+            semestre = Integer.parseInt(entradaTeclado.readLine());
+            Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
+            Calendar fechaNacimientoCalendario = Calendar.getInstance();
+            fechaNacimientoCalendario.setTime(fechaNacimientoDate);
+            personas.add(new Alumno(carnetUniversitario, semestre, carnetIdentidad, nombre, fechaNacimientoCalendario));
+            System.out.println("Registro de Profesor completado!");
+        } catch(Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    public static void modificarAdministrativos() {
+        int id;
+        Administrativo administrativo;
+        BufferedReader entradaTeclado = new BufferedReader(new InputStreamReader(System.in));
+        
+        limpiarConsola();
+        System.out.println("+==================================================+");
+        System.out.println("| Modificar Administrativos                           |");
+        System.out.println("+==================================================+");
+        try {
+            System.out.print("Introduzca el Id del Administrativo a Modificar: ");
+            id = buscarPersona(Integer.parseInt(entradaTeclado.readLine()));
+            if (id > -1) {
+                administrativo = (Administrativo)personas.get(id);
+                System.out.print("Modificar el Carnet de Identidad '" + administrativo.getCarnetIdentidad()+ "': ");
+                administrativo.setCarnetIdentidad(entradaTeclado.readLine());
+                System.out.print("Modificar el Nombre '" + administrativo.getNombre() + "': ");
+                administrativo.setNombre(entradaTeclado.readLine());
+                System.out.print("Modificar la Fecha de Nacimiento '" + Utilitarios.getFechaCalendario(administrativo.getFechaNacimiento()) + "': ");
+                Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(entradaTeclado.readLine());
+                Calendar fechaNacimientoCalendario = Calendar.getInstance();
+                fechaNacimientoCalendario.setTime(fechaNacimientoDate);
+                administrativo.setFechaNacimiento(fechaNacimientoCalendario);
+               
+                
+                personas.set(id, administrativo);
+                System.out.println("Registro de Administrativo modificado!");
+            } else {
+                System.out.println("El Registro de Administrativo no existe!");
+            }
+        } catch(Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    public static void borrarAdministrativos() {
+        int id;
+        BufferedReader entradaTeclado = new BufferedReader(new InputStreamReader(System.in));
+        
+        limpiarConsola();
+        System.out.println("+==================================================+");
+        System.out.println("| Borrar Administrativos                                   |");
+        System.out.println("+==================================================+");
+        try {
+            System.out.print("Introduzca el Id del Administrativos a Borrar: ");
+            id = buscarPersona(Integer.parseInt(entradaTeclado.readLine()));
+            if (id > -1) {
+                personas.remove(id);
+                System.out.println("Registro de Administrativo borrado!");
+            } else {
+                System.out.println("El Registro de Administrativo no existe!");
             }
         } catch(Exception ex) {
             System.out.println("Error: " + ex.getMessage());
