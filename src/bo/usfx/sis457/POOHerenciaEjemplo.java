@@ -275,16 +275,16 @@ public class POOHerenciaEjemplo {
         return existe?i:-1;
     }
     
-    public static void listarProfesores() {
+    public static void listarDocente() {
         limpiarConsola();
         System.out.println("+==================================================+");
         System.out.println("| Listado de Profesores                            |");
         System.out.println("+==================================================+");
         int i = 0;
-        for (Persona profesor: personas) {
-            if (profesor instanceof Profesor) {
+        for (Persona Docente: personas) {
+            if (Docente instanceof Docente) {
                 i++;
-                System.out.println(i + ": " + profesor);
+                System.out.println(i + ": " + Docente);
             }
         }
         if (i == 0) {
@@ -292,18 +292,19 @@ public class POOHerenciaEjemplo {
         }
     }
     
-    public static void anadirProfesor() {
+    public static void anadirDocente() {
         String carnetIdentidad;
         String nombre;
         String fechaNacimiento;
-        String contrato;
+        int AñosDeExperiencia;
+        String Asignatura;
         String titulo;
         BufferedReader entradaTeclado = new BufferedReader(new InputStreamReader(System.in));
         
         limpiarConsola();
         try {
             System.out.println("+==================================================+");
-            System.out.println("| Añadir Profesor                                  |");
+            System.out.println("| Añadir Docente                                |");
             System.out.println("+==================================================+");
             System.out.print("Introduzca el Carnet de Identidad: ");
             carnetIdentidad = entradaTeclado.readLine();
@@ -311,48 +312,50 @@ public class POOHerenciaEjemplo {
             nombre = entradaTeclado.readLine();
             System.out.print("Introduzca la Fecha de Nacimiento (ejemplo: 1980-01-01): ");
             fechaNacimiento = entradaTeclado.readLine();
-            System.out.print("Introduzca el Contrato: ");
-            contrato = entradaTeclado.readLine();
+            System.out.print("Introduzca el AñosDeExperiencia: ");
+            AñosDeExperiencia = entradaTeclado.readLine();
+             System.out.print("Introduzca la asignatura: ");
+            Asignatura = entradaTeclado.readLine();
             System.out.print("Introduzca el Título: ");
             titulo = entradaTeclado.readLine();
             Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
             Calendar fechaNacimientoCalendario = Calendar.getInstance();
             fechaNacimientoCalendario.setTime(fechaNacimientoDate);
-            personas.add(new Profesor(contrato, titulo, carnetIdentidad, nombre, fechaNacimientoCalendario));
+            personas.add(new Docente(AñosDeExperiencia, Asignatura, titulo, carnetIdentidad, nombre, fechaNacimientoCalendario));
             System.out.println("Registro de Profesor completado!");
         } catch(Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
     
-    public static void modificarProfesor() {
+    public static void modificarDocente() {
         int id;
-        Profesor profesor;
+        Docente docente;
         BufferedReader entradaTeclado = new BufferedReader(new InputStreamReader(System.in));
         
         limpiarConsola();
         System.out.println("+==================================================+");
-        System.out.println("| Modificar Profesor                               |");
+        System.out.println("| Modificar Docente                              |");
         System.out.println("+==================================================+");
         try {
-            System.out.print("Introduzca el Id del Profesor a Modificar: ");
+            System.out.print("Introduzca el Id del Docente a Modificar: ");
             id = buscarPersona(Integer.parseInt(entradaTeclado.readLine()));
             if (id > -1) {
-                profesor = (Profesor)personas.get(id);
-                System.out.print("Modificar el Carnet de Identidad '" + profesor.getCarnetIdentidad()+ "': ");
-                profesor.setCarnetIdentidad(entradaTeclado.readLine());
-                System.out.print("Modificar el Nombre '" + profesor.getNombre() + "': ");
-                profesor.setNombre(entradaTeclado.readLine());
-                System.out.print("Modificar la Fecha de Nacimiento '" + Utilitarios.getFechaCalendario(profesor.getFechaNacimiento()) + "': ");
+                docente= (Docente)personas.get(id);
+                System.out.print("Modificar el Carnet de Identidad '" + docente.getCarnetIdentidad()+ "': ");
+                docente.setCarnetIdentidad(entradaTeclado.readLine());
+                System.out.print("Modificar el Nombre '" + docente.getNombre() + "': ");
+                docente.setNombre(entradaTeclado.readLine());
+                System.out.print("Modificar la Fecha de Nacimiento '" + Utilitarios.getFechaCalendario(docente.getFechaNacimiento()) + "': ");
                 Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(entradaTeclado.readLine());
                 Calendar fechaNacimientoCalendario = Calendar.getInstance();
                 fechaNacimientoCalendario.setTime(fechaNacimientoDate);
-                profesor.setFechaNacimiento(fechaNacimientoCalendario);
-                System.out.print("Modificar el Contrato '" + profesor.getContrato()+ "': ");
-                profesor.setContrato(entradaTeclado.readLine());
+                docente.setFechaNacimiento(fechaNacimientoCalendario);
+                System.out.print("Modificar el AñosDeExperiencia '" + docente.getAñosDeExperiencia()+ "': ");
+                docente.setAñosDeExperiencia(entradaTeclado.readLine());
                 System.out.print("Introduzca el Título Universitario: ");
-                profesor.setTitulo(entradaTeclado.readLine());
-                personas.set(id, profesor);
+                docente.setTitulo(entradaTeclado.readLine());
+                personas.set(id, docente);
                 System.out.println("Registro de Profesor modificado!");
             } else {
                 System.out.println("El Registro de Profesor no existe!");
@@ -362,22 +365,22 @@ public class POOHerenciaEjemplo {
         }
     }
     
-    public static void borrarProfesor() {
+    public static void borrarDocente() {
         int id;
         BufferedReader entradaTeclado = new BufferedReader(new InputStreamReader(System.in));
         
         limpiarConsola();
         System.out.println("+==================================================+");
-        System.out.println("| Borrar Profesor                                  |");
+        System.out.println("| Borrar Docente                                 |");
         System.out.println("+==================================================+");
         try {
-            System.out.print("Introduzca el Id del Profesor a Borrar: ");
+            System.out.print("Introduzca el Id del Docente a Borrar: ");
             id = buscarPersona(Integer.parseInt(entradaTeclado.readLine()));
             if (id > -1) {
                 personas.remove(id);
-                System.out.println("Registro de Profesor borrado!");
+                System.out.println("Registro de Docente borrado!");
             } else {
-                System.out.println("El Registro de Profesor no existe!");
+                System.out.println("El Registro de Docente no existe!");
             }
         } catch(Exception ex) {
             System.out.println("Error: " + ex.getMessage());
