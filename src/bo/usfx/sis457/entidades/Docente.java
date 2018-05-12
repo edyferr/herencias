@@ -7,6 +7,7 @@ package bo.usfx.sis457.entidades;
 
 import bo.usfx.sis457.Utilitarios;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -34,6 +35,14 @@ public class Docente extends Persona {
 
     public Docente() {
         
+    }
+
+    public Docente(String string, String licenciado_en_Informática, String string0, String juan_Perez, GregorianCalendar gregorianCalendar) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Docente(String string, String ingeniero_de_Sistemas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getAñosDeExperiencia() {

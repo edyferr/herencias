@@ -32,6 +32,10 @@ public class Alumno extends Persona {
         this.Asignaturas = Asignaturas;
     }
 
+    public Alumno(String string, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getCarnetUniversitario() {
         return CarnetUniversitario;
     }
